@@ -1,13 +1,6 @@
 import random
 import math
 
-# ==============================================================================
-# CONFIGURAZIONE PARAMETRI OPERATIVI - CALLIPO AGRICOLA (PIZZO CALABRO, VV)
-# ==============================================================================
-# Mappatura dei parametri operativi per la raccolta manuale/agevolata:
-# - resa_oraria: quintali (q) medi raccolti da una squadra di operai in un'ora.
-# - squadre_disponibili: numero massimo di squadre operative assegnabili nei campi.
-# - ore_lavorative_giorno: durata del turno giornaliero operativo in Calabria.
 PARAMETRI_PRODOTTI = {
     "Olive":  {"resa_oraria": 2.5, "squadre_disponibili": 5},
     "Arance": {"resa_oraria": 4.0, "squadre_disponibili": 4},
@@ -17,9 +10,6 @@ PARAMETRI_PRODOTTI = {
 ORE_LAVORATIVE_GIORNO = 8   # Turno di lavoro standard per il benessere agricolo.
 ORGANICO_TOTALE_SQUADRE = 8  # Massimo numero di squadre impiegabili in contemporanea.
 
-# ==============================================================================
-# FUNZIONE 1: GENERAZIONE CASUALE DEI LOTTI DI RACCOLTA (STAGIONE AGRICOLA)
-# ==============================================================================
 def genera_quantita_lotti():
     """
     Genera casualmente le quantità in quintali da raccogliere per i 3 prodotti,
@@ -32,9 +22,6 @@ def genera_quantita_lotti():
     }
     return lotti
 
-# ==============================================================================
-# FUNZIONE 2: SEQUENZA PRODUTTIVA 1 - RACCOLTA IN SERIE (LINEARE)
-# ==============================================================================
 def simulazione_sequenza_seriale(lotti_da_raccogliere):
     """
     Simula lo scenario in cui Callipo raccoglie un prodotto alla volta.
@@ -58,9 +45,6 @@ def simulazione_sequenza_seriale(lotti_da_raccogliere):
         
     return round(ore_totali, 2), report_dettagliato
 
-# ==============================================================================
-# FUNZIONE 3: SEQUENZA PRODUTTIVA 2 - RACCOLTA IN PARALLELO (MULTITASKING)
-# ==============================================================================
 def simulazione_sequenza_parallela(lotti_da_raccogliere):
     """
     Simula lo scenario in cui le squadre lavorano in contemporanea su più campi,
@@ -88,29 +72,26 @@ def simulazione_sequenza_parallela(lotti_da_raccogliere):
             
     return round(ore_totali_parallelo, 2), report_dettagliato
 
-# ==============================================================================
-# FUNZIONE PRINCIPALE: COORDINAMENTO DELLA SIMULAZIONE
-# ==============================================================================
 def main():
     print("-" * 75)
     print("SISTEMA DI PIANIFICAZIONE LOGISTICA RACCOLTA - CALLIPO AGRICOLA S.r.l.")
     print("-" * 75)
     
-    # 1. Generazione del dataset casuale dei raccolti calabresi
+    #  Generazione del dataset casuale dei raccolti calabresi
     lotti_attuali = genera_quantita_lotti()
     print("\n[INFO] Stima quantitativi di raccolta generati per la stagione corrente:")
     for prod, qta in lotti_attuali.items():
         print(f" - Comparto {prod}: {qta} quintali (q)")
         
-    # 2. Esecuzione e calcolo dello Scenario 1 (Seriale)
+    #  Esecuzione e calcolo dello Scenario 1 (Seriale)
     ore_totali_s1, dettaglio_s1 = simulazione_sequenza_seriale(lotti_attuali)
     giorni_s1 = math.ceil(ore_totali_s1 / ORE_LAVORATIVE_GIORNO)
     
-    # 3. Esecuzione e calcolo dello Scenario 2 (Parallelo)
+    #  Esecuzione e calcolo dello Scenario 2 (Parallelo)
     ore_totali_s2, dettaglio_s2 = simulazione_sequenza_parallela(lotti_attuali)
     giorni_s2 = math.ceil(ore_totali_s2 / ORE_LAVORATIVE_GIORNO)
     
-    # 4. Presentazione dei Risultati di Output richiesti dalla traccia
+    #  Presentazione dei Risultati di Output richiesti dalla traccia
     print("\n" + "="*27 + " ANALISI DI PRODUTTIVITÀ " + "="*27)
     
     print(f"\nSEQUENZA 1 - RACCOLTA IN SERIE (Lineare per comparto):")
